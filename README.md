@@ -7,7 +7,40 @@
 
 
 
+## 栈和队列
+### 有效的括号<br>
+	`题目：定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+	有效字符串需满足：
+	左括号必须用相同类型的右括号闭合。
+	左括号必须以正确的顺序闭合`
+我的解法<br>
+	利用栈类去计算
+```
+public static boolean isValid(String s) {
+		Stack<Character> stack = new Stack<Character>();
+        for (Character c : s.toCharArray()) {
+	        if ("({[".contains(String.valueOf(c))) {
+	                stack.push(c);
+	        } 
+	        else {
+	            if (!stack.isEmpty() && is_valid(stack.peek(), c)) {
+	                   stack.pop();
+	            }
+	            else {
+	                   return false;
+	            }
+	       }
+       }
+       return stack.isEmpty();
+    }
 
+    
+    
+private static boolean is_valid(char c1, char c2) {//找到括号的对应情况
+    return (c1 == '(' && c2 == ')') || (c1 == '{' && c2 == '}')
+        || (c1 == '[' && c2 == ']');
+}
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
