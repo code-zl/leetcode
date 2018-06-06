@@ -14,7 +14,7 @@
 	左括号必须用相同类型的右括号闭合。
 	左括号必须以正确的顺序闭合`
 我的解法<br>
-	利用栈类去计算
+	利用栈类去计算，左括号是一类，最先出现的右括号必须要和最后一个左括号配对。当用到最后的元素时一般考虑用栈来实现。<br>
 ```
 public static boolean isValid(String s) {
 		Stack<Character> stack = new Stack<Character>();
