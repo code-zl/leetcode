@@ -9,11 +9,12 @@
 
 ## 栈和队列
 ### 有效的括号<br>
+[leetcode:20---valid parentheses](https://leetcode-cn.com/problems/valid-parentheses/description/)<br>
 	`题目：定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 	有效字符串需满足：
 	左括号必须用相同类型的右括号闭合。
-	左括号必须以正确的顺序闭合`
-我的解法<br>
+	左括号必须以正确的顺序闭合`<br>
+	我的解法<br>
 	利用栈类去计算，左括号是一类，最先出现的右括号必须要和最后一个左括号配对。当用到最后的元素时一般考虑用栈来实现。<br>
 ```
 public static boolean isValid(String s) {
@@ -39,6 +40,60 @@ public static boolean isValid(String s) {
 private static boolean is_valid(char c1, char c2) {//找到括号的对应情况
     return (c1 == '(' && c2 == ')') || (c1 == '{' && c2 == '}')
         || (c1 == '[' && c2 == ']');
+}
+```
+### 最小栈<br>
+[leetcode:155--min stack](https://leetcode-cn.com/problems/min-stack/description/)<br>
+	`题目：设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
+	push(x) -- 将元素 x 推入栈中。
+	pop() -- 删除栈顶的元素。
+	top() -- 获取栈顶元素。
+	getMin() -- 检索栈中的最小元素。`
+	
+	主要是实现栈的基本功能，这里用数组进行实现，重点是设置一个`栈顶指针`来表示栈顶元素的位置，pop后只需要把指针后移一个位置即可不需要删除元素
+```
+class MinStack {
+
+    /** initialize your data structure here. */
+	int default_capacity=2;
+	int top=-1;//定义栈顶指针
+	int[] s=new int[default_capacity];
+	 public MinStack() {
+	    }
+       public boolean Empty(){
+    	   return top==-1;
+       }
+	    public void push(int x) {
+	        if(top==s.length-1){//当容量满时要进行扩容
+	        	int[] s1=new int[s.length*2];
+	        	System.arraycopy(s, 0, s1, 0, s.length);//将小的数组中的值放到一个更大的数组中
+	        	s=s1;
+	        }
+	        s[++top]=x;
+	    }
+	    
+	    public void pop() {
+	        if(this.Empty())
+	        	System.out.println("出现错误");
+	        top--;//出栈只是栈顶指针退一格，原来的元素位置没有变
+	    }
+	    
+	    public int top() {//返回栈顶元素
+	    	if(this.Empty())
+	    		System.out.println("空的栈");
+	    	System.out.println(s[top]);
+	        return s[top];
+	    }
+	    
+	    public int getMin() {
+	    	int min=s[0];
+	        for(int i=1;i<=top;i++){
+	        	if(s[i]<min)
+	        		min=s[i];
+	        }
+	        System.out.println(min);
+	        return min;
+	    }
 }
 ```
 ## 哈希表
