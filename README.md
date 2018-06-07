@@ -96,6 +96,60 @@ class MinStack {
 	    }
 }
 ```
+### 棒球比赛<br>
+[leetcode:682---baseballGame](https://leetcode-cn.com/problems/baseball-game/description/)<br>
+	`题目：现在是棒球比赛记录员。<br>
+	给定一个字符串列表，每个字符串可以是以下四种类型之一：<br>
+	1.整数（一轮的得分）：直接表示您在本轮中获得的积分数。<br>
+	2. "+"（一轮的得分）：表示本轮获得的得分是前两轮有效 回合得分的总和。<br>
+	3. "D"（一轮的得分）：表示本轮获得的得分是前一轮有效 回合得分的两倍。<br>
+	4. "C"（一个操作，这不是一个回合的分数）：表示您获得的最后一个有效 回合的分数是无效的，应该被移除<br>
+	你需要返回你在所有回合中得分的总和。`
+	
+	可以看到明显与最后处理的结果是有关的，于是考虑用栈来实现
+	一个思路：想要把栈顶的两个元素相加并把结果压栈，但是又不能弹出那两个元素，可以采用pop第一个元素后peek第二个元素，然后再push第一个元素，再把和push
+```
+public static int calPoints(String[] ops) {
+    	int a,b,c,d;
+    	int sum=0;
+    	Stack<String> stack=new Stack<>();
+    	for(int i=0;i<ops.length;i++){
+    		switch (ops[i]) {
+			case "+":{
+				a=Integer.parseInt(stack.pop());//想要把栈顶的两个元素相加并把结果压栈，但是又不能弹出那两个元素，可以采用pop第一个元素后peek第二个元素，然后再push第一个元素，再把和push
+				b=Integer.parseInt(stack.peek());
+				c=a+b;
+				stack.push(String.valueOf(a));
+				stack.push(String.valueOf(c));
+				sum+=c;
+				break;
+			}
+
+			case "D":{
+				d=Integer.parseInt(stack.peek())*2;
+				stack.push(String.valueOf(d));
+				sum+=d;
+				break;
+			}
+
+			case "C":{
+				sum-=Integer.parseInt(stack.pop());
+				break;
+			}
+
+			default:{
+				stack.push(ops[i]);
+				sum+=Integer.parseInt(ops[i]);
+				break;
+			}
+
+			}
+    	}
+       
+        return sum;
+    }
+```
+	
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
