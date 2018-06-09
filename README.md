@@ -183,7 +183,46 @@ class MyStack {
     }
 }
 ```
- 
+### 用栈实现队列<br>
+[leetcode:mplement Queue using Stacks](https://leetcode-cn.com/problems/implement-queue-using-stacks/description/)<br>
+	和用队列实现栈相同的思路，仍旧是实现基本的功能，push操作需要定义一个中间的栈对象<br>
+```
+class MyQueue {
+
+    /** Initialize your data structure here. */
+	Stack<Integer> stack=new Stack<>();
+    public MyQueue() {
+        
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+    	Stack<Integer> temp=new Stack<>();
+    	while(!stack.isEmpty()){
+    		temp.push(stack.pop());//讲原栈的元素一个个的放入到中间栈中
+    	}
+    	stack.push(x);
+    	while(!temp.isEmpty()){
+    		stack.push(temp.pop());
+    	}
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        return stack.pop();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        return stack.peek();
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return stack.isEmpty();
+    }
+}
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
