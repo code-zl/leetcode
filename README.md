@@ -149,7 +149,41 @@ public static int calPoints(String[] ops) {
         return sum;
     }
 ```
-	
+### 用队列实现栈<br>
+[leetcode:225. Implement Stack using Queues](https://leetcode-cn.com/problems/implement-stack-using-queues/description/)<br>
+	`题目：用队列实现栈的基本操作，如push，pop,top,is_empty等`<br>
+	因为在java中Queue是一个接口无法直接实例化，于是采用实现他的类ArrayDeque，这是一个双端队列，实则便可以当作栈来用，所以这里投机取巧了。实际		上，如果要实现push操作，必须要在push方法中再定义一个队列temp来存放加入新元素之前的元素，然后把老的队列所有元素弹出后再添加新的元素进去，最后	    把temp中存放的元素再push进去，这样新加入的元素便放在了队头。
+```
+class MyStack {
+
+    /** Initialize your data structure here. */
+    ArrayDeque<Integer> arrayDeque;
+    public MyStack() { 
+    	arrayDeque=new ArrayDeque<>();//双端队列,默认大小为16
+    }
+    
+    /** Push element x onto stack. */
+    public void push(int x) {
+        arrayDeque.addFirst(x);
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    public int pop() {
+        return arrayDeque.poll();
+    }
+    
+    /** Get the top element. */
+    public int top() {
+        return arrayDeque.peek();
+    }
+    
+    /** Returns whether the stack is empty. */
+    public boolean empty() {
+        return arrayDeque.isEmpty();
+    }
+}
+```
+ 
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
