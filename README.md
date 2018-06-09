@@ -223,6 +223,42 @@ class MyQueue {
     }
 }
 ```
+### 比较含退格的字符串
+[leetcode:844. Backspace String Compare](https://leetcode-cn.com/problems/backspace-string-compare/description/)<br>
+	`题目：给定 S 和 T 两个字符串，当它们分别被输入到空白的文本编辑器后，判断二者是否相等，并返回结果。 # 代表退格字符。`<br>
+	考虑把两个字符串转变为字符数组然后存放在栈中，一个退格键#则将栈顶元素出栈，最后比较两个栈的元素即可<br>
+```
+    public boolean backspaceCompare(String S, String T) {
+        char[] s=S.toCharArray();
+    	char[] t=T.toCharArray();
+    	Stack<Character> s1=new Stack<>();
+    	Stack<Character> s2=new Stack<>();
+    	int cout=0;
+    	for(char a:s){
+    		if(a=='#'){
+    			if(!s1.isEmpty())
+    				s1.pop();
+    		}
+    			
+    		else s1.push(a);
+    	}
+    	for(char b:t){
+    		if(b=='#'){
+    			if(!s2.isEmpty())
+    				s2.pop();
+    		}
+    		else s2.push(b);
+    	}
+    	int len=s1.size();
+    	if(s1.size()!=s2.size())
+    		return false;
+    	while(!s1.isEmpty()){
+    		if(s1.pop()==s2.pop())
+    			cout++;
+    	}
+		return cout==len;
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
