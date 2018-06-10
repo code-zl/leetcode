@@ -289,6 +289,47 @@ class Solution {
     }
 }
 ```
+### 对称二叉树	(没做出来)
+	`题目：给定一个二叉树，检查它是否是镜像对称的。`
+	使用BFS对整个二叉树进行层级遍历。在每层中使用Stack判断是否对称。<br>
+```
+public boolean isSymmetric(TreeNode root) {
+        // Write your code here
+        Queue<TreeNode> queue = new LinkedList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        queue.offer(root);
+        TreeNode current;
+        int size;
+        boolean isSymmetric;
+        while (!queue.isEmpty()){
+            size = queue.size();
+            for (int i = 0; i < size; i ++){
+                current = queue.poll();
+                if (current != null){
+                    queue.offer(current.left);
+                    queue.offer(current.right);
+                }
+                if (size == 1){
+                    break;
+                }
+                if (size % 2 != 0){
+                    return false;
+                }
+                if (i < size / 2){
+                    stack.push(current);
+                } else {
+                    isSymmetric = current == null 
+                        ? current == stack.pop()
+                        : current.val == stack.pop().val;
+                    if (!isSymmetric){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
