@@ -291,7 +291,7 @@ class Solution {
 ```
 ### 对称二叉树	
 	`题目：给定一个二叉树，检查它是否是镜像对称的。`
-	*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
+*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
 ```
 public boolean isSymmetric(TreeNode root) {
 		Queue<TreeNode> queue=new LinkedList<>();
@@ -335,7 +335,7 @@ public boolean isSymmetric(TreeNode root) {
 		return true; 
     }
 ```
-	*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点		的左子树是否相等<br>
+*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点的左子树是否相等<br>
 ```
 public boolean isSymmetric(TreeNode root) {
 		return check(root, root);
