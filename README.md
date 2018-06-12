@@ -259,7 +259,8 @@ class MyQueue {
 		return cout==len;
     }
 ```
-## 树
+树
+===========
 ### 相同的树<br>
 [leetcode:100. Same Tree](https://leetcode-cn.com/problems/same-tree/description/)<br>
 	`题目：给定两个二叉树，编写一个函数来检验它们是否相同。
