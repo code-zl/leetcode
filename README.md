@@ -351,6 +351,21 @@ public boolean isSymmetric(TreeNode root) {
 		
 	}
 ```
+### 二叉树的最大深度
+	`题目：给定一个二叉树，找出其最大深度。
+	二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。`
+	因为每一个树节点的高度是它的左节点和右节点最大值+1，于是可由此进行递归。<br>
+```
+public int maxDepth(TreeNode root) {
+		
+		if(root==null)
+			return 0;
+		int left=maxDepth(root.left);
+		int right=maxDepth(root.right);
+		return Math.max(left, right)+1;
+		
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
