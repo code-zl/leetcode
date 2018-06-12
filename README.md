@@ -1,5 +1,5 @@
 * # 数据结构相关
-	* ## [链表](./链表)
+	* ## [栈和队列](##栈-和-队-列)
 
 	* ## 哈希表
 
@@ -15,8 +15,8 @@
 	左括号必须用相同类型的右括号闭合。
 	左括号必须以正确的顺序闭合`<br>
 	我的解法<br>
-	利用栈类去计算，左括号是一类，最先出现的右括号必须要和最后一个左括号配对。当用到最后的元素时一般考虑用栈来实现。<br>
-```
+		利用栈类去计算，左括号是一类，最先出现的右括号必须要和最后一个左括号配对。当用到最后的元素时一般考虑用栈来实现。<br>
+```java
 public static boolean isValid(String s) {
 		Stack<Character> stack = new Stack<Character>();
         for (Character c : s.toCharArray()) {
@@ -50,8 +50,8 @@ private static boolean is_valid(char c1, char c2) {//找到括号的对应情况
 	top() -- 获取栈顶元素。
 	getMin() -- 检索栈中的最小元素。`
 	
-	主要是实现栈的基本功能，这里用数组进行实现，重点是设置一个`栈顶指针`来表示栈顶元素的位置，pop后只需要把指针后移一个位置即可不需要删除元素
-```
+		主要是实现栈的基本功能，这里用数组进行实现，重点是设置一个`栈顶指针`来表示栈顶元素的位置，pop后只需要把指针后移一个位置即可不需要删除元素
+```java
 class MinStack {
 
     /** initialize your data structure here. */
@@ -108,7 +108,7 @@ class MinStack {
 	
 	可以看到明显与最后处理的结果是有关的，于是考虑用栈来实现
 	一个思路：想要把栈顶的两个元素相加并把结果压栈，但是又不能弹出那两个元素，可以采用pop第一个元素后peek第二个元素，然后再push第一个元素，再把和push
-```
+```java
 public static int calPoints(String[] ops) {
     	int a,b,c,d;
     	int sum=0;
@@ -153,7 +153,7 @@ public static int calPoints(String[] ops) {
 [leetcode:225. Implement Stack using Queues](https://leetcode-cn.com/problems/implement-stack-using-queues/description/)<br>
 	`题目：用队列实现栈的基本操作，如push，pop,top,is_empty等`<br>
 	因为在java中Queue是一个接口无法直接实例化，于是采用实现他的类ArrayDeque，这是一个双端队列，实则便可以当作栈来用，所以这里投机取巧了。实际		上，如果要实现push操作，必须要在push方法中再定义一个队列temp来存放加入新元素之前的元素，然后把老的队列所有元素弹出后再添加新的元素进去，最后	    把temp中存放的元素再push进去，这样新加入的元素便放在了队头。
-```
+```java
 class MyStack {
 
     /** Initialize your data structure here. */
@@ -186,7 +186,7 @@ class MyStack {
 ### 用栈实现队列<br>
 [leetcode:mplement Queue using Stacks](https://leetcode-cn.com/problems/implement-queue-using-stacks/description/)<br>
 	和用队列实现栈相同的思路，仍旧是实现基本的功能，push操作需要定义一个中间的栈对象<br>
-```
+```java
 class MyQueue {
 
     /** Initialize your data structure here. */
@@ -227,7 +227,7 @@ class MyQueue {
 [leetcode:844. Backspace String Compare](https://leetcode-cn.com/problems/backspace-string-compare/description/)<br>
 	`题目：给定 S 和 T 两个字符串，当它们分别被输入到空白的文本编辑器后，判断二者是否相等，并返回结果。 # 代表退格字符。`<br>
 	考虑把两个字符串转变为字符数组然后存放在栈中，一个退格键#则将栈顶元素出栈，最后比较两个栈的元素即可<br>
-```
+```java
     public boolean backspaceCompare(String S, String T) {
         char[] s=S.toCharArray();
     	char[] t=T.toCharArray();
@@ -265,7 +265,7 @@ class MyQueue {
 	`题目：给定两个二叉树，编写一个函数来检验它们是否相同。
 	如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。`
 	采用递归的方法来写，另外用传入根节点来表示一个二叉树<br>
-```
+```java
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -288,7 +288,7 @@ class Solution {
 			else return false;
     }
 }
-```
+```java
 ### 对称二叉树	
 	`题目：给定一个二叉树，检查它是否是镜像对称的。`
 *解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
@@ -334,7 +334,7 @@ public boolean isSymmetric(TreeNode root) {
 		
 		return true; 
     }
-```
+```java
 *解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点的左子树是否相等<br>
 ```
 public boolean isSymmetric(TreeNode root) {
@@ -365,7 +365,7 @@ public int maxDepth(TreeNode root) {
 		return Math.max(left, right)+1;
 		
     }
-```
+```java
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
