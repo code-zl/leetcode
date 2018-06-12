@@ -289,46 +289,67 @@ class Solution {
     }
 }
 ```
-### 对称二叉树	(没做出来)
+### 对称二叉树	
 	`题目：给定一个二叉树，检查它是否是镜像对称的。`
-	使用BFS对整个二叉树进行层级遍历。在每层中使用Stack判断是否对称。<br>
+	*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
 ```
 public boolean isSymmetric(TreeNode root) {
-        // Write your code here
-        Queue<TreeNode> queue = new LinkedList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        queue.offer(root);
-        TreeNode current;
-        int size;
-        boolean isSymmetric;
-        while (!queue.isEmpty()){
-            size = queue.size();
-            for (int i = 0; i < size; i ++){
-                current = queue.poll();
-                if (current != null){
-                    queue.offer(current.left);
-                    queue.offer(current.right);
-                }
-                if (size == 1){
-                    break;
-                }
-                if (size % 2 != 0){
-                    return false;
-                }
-                if (i < size / 2){
-                    stack.push(current);
-                } else {
-                    isSymmetric = current == null 
-                        ? current == stack.pop()
-                        : current.val == stack.pop().val;
-                    if (!isSymmetric){
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+		Queue<TreeNode> queue=new LinkedList<>();
+		Stack<TreeNode> stack=new Stack<>();//用栈来存放坐边的元素
+		TreeNode current;
+		int size;
+		Boolean isSymmrtric = false;;
+		queue.offer(root);//当使用有容量限制的队列时，此方法通常要优于 add(E)，后者可能无法插入元素，而只是抛出一个异常。
+		while(!queue.isEmpty()){
+			size=queue.size();
+			for(int i=0;i<size;i++){//引入此for循环为了使每次在一层中进行比较，一次队列放一行元素，在for循环运行完一次后便可以将上一行元素全部退去加入下一行元素
+				current=queue.poll();
+				if(current!=null){
+					queue.offer(current.left);
+					queue.offer(current.right);
+				}
+				if(size==1)
+					break;//将根节点导入的情况除去
+				if(size%2!=0)
+					return false;
+				else if(i<size/2)
+					stack.push(current);
+				else{
+					if(current!=null&&stack.peek()!=null)
+						isSymmrtric=stack.pop().val==current.val;
+					else if(current==null&&stack.peek()==null)
+						isSymmrtric=true;
+					else if(current==null&&stack.peek()!=null||current!=null&&stack.peek()==null)
+						isSymmrtric=false;
+					
+					if(!isSymmrtric)
+						return false;//有任何一行的一个不相等则为false
+				}
+					
+				
+				
+			}
+			
+		}
+		
+		return true; 
     }
+```
+	*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点		的左子树是否相等<br>
+```
+public boolean isSymmetric(TreeNode root) {
+		return check(root, root);
+		
+	}
+	public boolean check(TreeNode x,TreeNode y){
+		if(x==null&&y==null){
+			return true;
+		}
+		if(x!=null&&y==null||x==null&y!=null)
+			return false;
+		return x.val==y.val&&check(x.left, y.right)&&check(x.right, y.left);
+		
+	}
 ```
 ## 哈希表
 ### 两数之和<br>
