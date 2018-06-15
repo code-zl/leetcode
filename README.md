@@ -368,6 +368,31 @@ public int maxDepth(TreeNode root) {
 		
     }
 ```
+###  将有序数组转换为二叉搜索树
+	`题目：将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
+	本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1`<br>
+	
+	注意一个很重要的点，数组是按升序进行排列的，而要求树的平衡的，于是根节点一定是数组中间的节点，这样大于和小于它的数正好都是一半，然后采用递归	      的方式去不断去对每一个节点采用对数组区间分段的方式进行处理，最后的树一定是左右差不多高的。偶数长时高度会差1<br>
+	不需要像AVL树一样在没插入一个节点便进行平衡处理，那样显得多余。leetcode中只需要按顺序返回树的各个节点就可以（上到下左到右），不需要指明子树关系<br>
+```
+private TreeNode buildTree(int[] num, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+
+        TreeNode node = new TreeNode(num[(start + end) / 2]);//因为只需要按顺序返回树的各节点就行，不需要标明左右节点或者子树的关系，于是直接不断new新的节点就可以了
+        node.left = buildTree(num, start, (start + end) / 2 - 1);
+        node.right = buildTree(num, (start + end) / 2 + 1, end);
+        return node;
+    }
+
+    public TreeNode sortedArrayToBST(int[] num) {
+        if (num == null) {
+            return null;
+        }
+        return buildTree(num, 0, num.length - 1);
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
