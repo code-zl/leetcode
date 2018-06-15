@@ -393,6 +393,76 @@ private TreeNode buildTree(int[] num, int start, int end) {
         return buildTree(num, 0, num.length - 1);
     }
 ```
+### 平衡二叉树
+	`题目:给定一个二叉树，判断它是否是高度平衡的二叉树。
+	本题中，一棵高度平衡二叉树定义为：
+	一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。`<br>
+	*我的解法（采用递归去逐渐判断每一个节点的左右节点是不是高度差1即可，引入了之前写的判断每个节点高度的函数height）*
+```
+public boolean isBalanced(TreeNode root) {
+		if(root==null)
+			return true;
+        if(Math.abs(height(root.left)-height(root.right))>1)
+        	return false;
+        if(isBalanced(root.left)&&isBalanced(root.right))
+        	return true;
+        else return false;
+        
+    }
+	public static int height(TreeNode root) {//得到每一个节点的高度
+		int x1;
+		int x2;
+		if(root==null)
+			return 0;
+		x1=height(root.left);
+		x2=height(root.right);
+		return Math.max(x1,x2)+1;
+		
+    }
+```
+	*标准答案的解法(更麻烦，专门定义了一个类来存放一个节点的属性，是不是平衡的以及深度)*
+```
+class ResultType {
+    public boolean isBalanced;
+    public int maxDepth;
+    public ResultType(boolean isBalanced, int maxDepth) {
+        this.isBalanced = isBalanced;
+        this.maxDepth = maxDepth;
+    }
+}
+
+public class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: True if this Binary tree is Balanced, or false.
+     */
+    public boolean isBalanced(TreeNode root) {
+        return helper(root).isBalanced;
+    }
+    
+    private ResultType helper(TreeNode root) {
+        if (root == null) {
+            return new ResultType(true, 0);
+        }
+        
+        ResultType left = helper(root.left);
+        ResultType right = helper(root.right);
+        
+        // subtree not balance
+        if (!left.isBalanced || !right.isBalanced) {
+            return new ResultType(false, -1);
+        }
+        
+        // root not balance
+        if (Math.abs(left.maxDepth - right.maxDepth) > 1) {
+            return new ResultType(false, -1);
+        }
+        
+        return new ResultType(true, Math.max(left.maxDepth, right.maxDepth) + 1);
+    }
+}
+
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
