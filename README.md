@@ -501,6 +501,34 @@ public boolean hasPathSum(TreeNode root, int sum) {
         //只要有一个树叶节点满足即可，于是采用或逻辑
     }
 ```
+### 左叶子之和
+[leetcode:404. Sum of Left Leaves](https://leetcode-cn.com/problems/sum-of-left-leaves/description/)<br>
+`计算给定二叉树的所有左叶子之和。`
+	由于只计算左叶子，于是对于右子树应该区别对待，对于每一个右子树节点当做新的根节点去考虑其左子树
+```java
+public int sumOfLeftLeaves(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        int sum = 0;
+        if(root.left != null)
+        {
+            TreeNode left = root.left;
+            if(left.left == null && left.right == null) {
+                sum += left.val;
+            }
+            else {
+                sum += sumOfLeftLeaves(left);
+            }
+        }
+        if(root.right != null)
+        {
+            TreeNode right = root.right;
+            sum += sumOfLeftLeaves(right);
+        }
+        return sum;
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
