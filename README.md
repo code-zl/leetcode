@@ -336,9 +336,9 @@ public boolean isSymmetric(TreeNode root) {
 		
 		return true; 
     }
-```java
-*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点的左子树是否相等<br>
 ```
+*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点的左子树是否相等<br>
+```java
 public boolean isSymmetric(TreeNode root) {
 		return check(root, root);
 		
@@ -354,6 +354,7 @@ public boolean isSymmetric(TreeNode root) {
 	}
 ```
 ### 二叉树的最大深度
+[leetcode:104. Maximum Depth of Binary Tree](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)<br>
 	`题目：给定一个二叉树，找出其最大深度。
 	二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。`
 	因为每一个树节点的高度是它的左节点和右节点最大值+1，于是可由此进行递归。<br>
@@ -369,12 +370,13 @@ public int maxDepth(TreeNode root) {
     }
 ```
 ###  将有序数组转换为二叉搜索树
+[leetcode:108. Convert Sorted Array to Binary Search Tree](https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/)<br>
 `题目：将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
 本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1`<br>
 	
 	注意一个很重要的点，数组是按升序进行排列的，而要求树的平衡的，于是根节点一定是数组中间的节点，这样大于和小于它的数正好都是一半，然后采用递归	      的方式去不断去对每一个节点采用对数组区间分段的方式进行处理，最后的树一定是左右差不多高的。偶数长时高度会差1<br>
 	不需要像AVL树一样在没插入一个节点便进行平衡处理，那样显得多余。leetcode中只需要按顺序返回树的各个节点就可以（上到下左到右），不需要指明子树关系<br>
-```
+```java
 private TreeNode buildTree(int[] num, int start, int end) {
         if (start > end) {
             return null;
@@ -394,12 +396,13 @@ private TreeNode buildTree(int[] num, int start, int end) {
     }
 ```
 ### 平衡二叉树
+[leetcode:110. Balanced Binary Tree](https://leetcode-cn.com/problems/balanced-binary-tree/)<br>
 `题目:给定一个二叉树，判断它是否是高度平衡的二叉树。
 本题中，一棵高度平衡二叉树定义为：
 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。`
 
 *我的解法（采用递归去逐渐判断每一个节点的左右节点是不是高度差1即可，引入了之前写的判断每个节点高度的函数height）*
-```
+```java
 public boolean isBalanced(TreeNode root) {
 		if(root==null)
 			return true;
@@ -422,7 +425,7 @@ public boolean isBalanced(TreeNode root) {
     }
 ```
 *标准答案的解法(更麻烦，专门定义了一个类来存放一个节点的属性，是不是平衡的以及深度)*
-```
+```java
 class ResultType {
     public boolean isBalanced;
     public int maxDepth;
@@ -463,6 +466,40 @@ public class Solution {
     }
 }
 
+```
+### 二叉树的最小深度
+`题目：给定一个二叉树，找出其最小深度。
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+说明: 叶子节点是指没有子节点的节点。`
+	说明 ：和计算最大深度类似，只不过取左右子树高度的最小值，但关键是对于有单子树的节点计算时要把单子树的高度加1，于是要分类讨论。<br>
+```java
+ public int minDepth(TreeNode root) {
+	      if(root==null)
+	    	  return 0;
+	      int left=minDepth(root.left);
+	      int right=minDepth(root.right);
+	      if(root.left==null)
+	    	  return right+1;
+	      if(root.right==null)
+	    	  return left+1;
+	     return Math.min(left, right)+1;
+	 }
+```
+### 路径和
+[leetcode:112. Path Sum](https://leetcode-cn.com/problems/path-sum/description/)<br>
+`题目：给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
+说明: 叶子节点是指没有子节点的节点。`
+ 
+	说明 ：之前自己考虑时总是想得出所有路劲的和再比较，实际上采用从上往下逐次迭代，并每次用sum减去路过的节点值作为新的总和是一种更好的方式。
+```java
+public boolean hasPathSum(TreeNode root, int sum) {
+		if(root==null)
+			return false;
+		if(root.left==null&&root.right==null)
+			return root.val==sum;//对于树叶节点，前面路劲经过的和值都是相等的，于是可以采用相减的方式去递归，每经过一个根节点就减去它的值
+		return hasPathSum(root.left, sum-root.val)||hasPathSum(root.right, sum-root.val);
+        //只要有一个树叶节点满足即可，于是采用或逻辑
+    }
 ```
 ## 哈希表
 ### 两数之和<br>
