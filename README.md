@@ -292,8 +292,8 @@ class Solution {
 }
 ```
 ### 对称二叉树	
-`题目：给定一个二叉树，检查它是否是镜像对称的。`
-*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
+`题目：给定一个二叉树，检查它是否是镜像对称的。`<br>
+*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较*
 ```java
 public boolean isSymmetric(TreeNode root) {
 		Queue<TreeNode> queue=new LinkedList<>();
@@ -337,7 +337,7 @@ public boolean isSymmetric(TreeNode root) {
 		return true; 
     }
 ```
-*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点的左子树是否相等<br>
+*解法二：采用递归的思想，较为简单。通过比较原节点是否相等以及递归表示左边节点的左子树和右边节点的右子树是否相等以及左边节点的右子树和右边节点的左子树是否相等*<br>
 ```java
 public boolean isSymmetric(TreeNode root) {
 		return check(root, root);
@@ -356,7 +356,7 @@ public boolean isSymmetric(TreeNode root) {
 ### 二叉树的最大深度
 [leetcode:104. Maximum Depth of Binary Tree](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)<br>
 	`题目：给定一个二叉树，找出其最大深度。
-	二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。`
+	二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。`<br>
 	因为每一个树节点的高度是它的左节点和右节点最大值+1，于是可由此进行递归。<br>
 ```java
 public int maxDepth(TreeNode root) {
@@ -399,7 +399,7 @@ private TreeNode buildTree(int[] num, int start, int end) {
 [leetcode:110. Balanced Binary Tree](https://leetcode-cn.com/problems/balanced-binary-tree/)<br>
 `题目:给定一个二叉树，判断它是否是高度平衡的二叉树。
 本题中，一棵高度平衡二叉树定义为：
-一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。`
+一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。`<br>
 
 *我的解法（采用递归去逐渐判断每一个节点的左右节点是不是高度差1即可，引入了之前写的判断每个节点高度的函数height）*
 ```java
@@ -470,7 +470,7 @@ public class Solution {
 ### 二叉树的最小深度
 `题目：给定一个二叉树，找出其最小深度。
 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
-说明: 叶子节点是指没有子节点的节点。`
+说明: 叶子节点是指没有子节点的节点。`<br>
 	说明 ：和计算最大深度类似，只不过取左右子树高度的最小值，但关键是对于有单子树的节点计算时要把单子树的高度加1，于是要分类讨论。<br>
 ```java
  public int minDepth(TreeNode root) {
@@ -503,7 +503,7 @@ public boolean hasPathSum(TreeNode root, int sum) {
 ```
 ### 左叶子之和
 [leetcode:404. Sum of Left Leaves](https://leetcode-cn.com/problems/sum-of-left-leaves/description/)<br>
-`计算给定二叉树的所有左叶子之和。`
+`计算给定二叉树的所有左叶子之和。`<br>
 	由于只计算左叶子，于是对于右子树应该区别对待，对于每一个右子树节点当做新的根节点去考虑其左子树
 ```java
 public int sumOfLeftLeaves(TreeNode root) {
