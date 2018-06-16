@@ -264,8 +264,8 @@ class MyQueue {
 ===========
 ### 相同的树<br>
 [leetcode:100. Same Tree](https://leetcode-cn.com/problems/same-tree/description/)<br>
-	`题目：给定两个二叉树，编写一个函数来检验它们是否相同。
-	如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。`
+`题目：给定两个二叉树，编写一个函数来检验它们是否相同。
+如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。`
 	采用递归的方法来写，另外用传入根节点来表示一个二叉树<br>
 ```java
 /**
@@ -290,11 +290,11 @@ class Solution {
 			else return false;
     }
 }
-```java
-### 对称二叉树	
-	`题目：给定一个二叉树，检查它是否是镜像对称的。`
-*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
 ```
+### 对称二叉树	
+`题目：给定一个二叉树，检查它是否是镜像对称的。`
+*解法一：采用迭代的思想。对整个二叉树进行层级遍历,将每一层的元素放到队列中，并用栈保存左子树的中的节点，每次出栈和右子树进行比较。<br>
+```java
 public boolean isSymmetric(TreeNode root) {
 		Queue<TreeNode> queue=new LinkedList<>();
 		Stack<TreeNode> stack=new Stack<>();//用栈来存放坐边的元素
