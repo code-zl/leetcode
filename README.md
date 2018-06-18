@@ -529,6 +529,32 @@ public int sumOfLeftLeaves(TreeNode root) {
         return sum;
     }
 ```
+### 另一个树的子树
+`题目：给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。`
+	说明 ：先定义一个方法来判定两个树是不是相等，然后再在主要的方法中不断的向下迭代。专门来判断两个树是不是相等是因为如果在isSubtree方法中直接判 	    断时会导致[3,4,5,1,null,null,2]将[3,1,2]判定为子树<br>
+```java
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+    	if (s == null) {
+            return t == null;
+        } 	
+    	if(s.val==t.val&&isSame(s, t))
+    		return true;
+    	else  
+    		return isSubtree(s.left, t)||isSubtree(s.right, t);   
+    }
+    public boolean isSame(TreeNode s, TreeNode t){//单纯判断连两个树是不是相等
+    	if (s == null) {
+            return t == null;
+        }
+    	if(t==null)
+    		return false;
+    	if(s.val!=t.val)
+    		return false;
+    	return isSame(s.left, t.left)&&isSame(s.right, t.right);
+		
+    	
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
