@@ -555,6 +555,55 @@ public int sumOfLeftLeaves(TreeNode root) {
     	
     }
 ```
+### 二叉树的直径
+`题目：给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。`
+	我的思路：由于最大的路径可能是经过根节点也可能不经过，但是一定和左右两个子节点的最大高度是有关系的。这里把每个节点的左右子节点的  
+	高度得出来并相加得到每个节点对应的最大路径（因为路径是算按边数算，于是高度会多1，所以两个子树的高度直接相加而不是再加2）。然后定义  
+	一个链表用来存放每个节点的最大路径，然后在链表中取最大值就是整个数的直径（最大路径）<br>
+*我的解法*
+```java
+class Solution {
+	ArrayList<Integer> list=new ArrayList<>();
+    public int diameterOfBinaryTree(TreeNode root) {
+    	maxP(root);
+    	//Integer[] arr=(Integer[]) list.toArray();
+    	if(list.size()==0)
+    		return 0;
+    	else{
+    		Integer temp=list.get(0);
+        	for(Integer t:list){
+        		if(t.compareTo(temp)>0)
+        			temp=t;
+        	}
+    		return temp.intValue();
+            
+    	}
+    	
+    }  
+    public void maxP(TreeNode t){
+    	 if(t==null)
+    	        return;
+    	 list.add(maxPath(t));
+    	 maxP(t.left);
+		 maxP(t.right);	
+    }
+    public int maxPath(TreeNode root){
+    	if(root==null)
+    		return 0;
+    	return maxDepth(root.left)+maxDepth(root.right); 	
+    }
+	public int maxDepth(TreeNode root) {//返回每一个节点的最大深度
+		if(root==null)
+			return 0;
+		int left=maxDepth(root.left);
+		int right=maxDepth(root.right);
+		return Math.max(left, right)+1;
+		
+    }
+
+
+}
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
