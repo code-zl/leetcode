@@ -604,6 +604,48 @@ class Solution {
 
 }
 ```
+###  把二叉搜索树转换为累加树
+`题目：给定一个二叉搜索树（Binary Search Tree），把它转换成为累加树（Greater Tree)，使得每个节点的值是原来的节点值加上所有大于它的节点值之和。`<br>
+	此题就是需要把一颗二叉查找树按照元素从大到小的顺序进行遍历，然后把经过的元素累加赋值给下一个要遍历的元素。
+	因为二叉树的中序遍历是采用左--中---右的顺序遍历，而这道题则需要反过来采用右--中--左的顺序遍历。
+* 一：自己的解法：重新写一个返回为int的函数来实现反向的中序遍历，主函数中调用它*
+```java
+public class ConvertBSTtoGreaterTree {
+    int sum = 0;//因为在每次递归过程中求得的和要保留，所以sum写成类的成员变量。
+    public TreeNode convertBST(TreeNode root) {
+    	add(root);
+		return root;
+        
+    }
+    public int add(TreeNode t){
+    	
+    	if(t==null)
+    		return 0;
+    	add(t.right);
+    	sum+=t.val;
+    	t.val=sum;
+    	add(t.left);
+    	return sum;
+    }
+```
+* 二：一种复杂度更低，运行时间更短的代码，巧妙的利用sum求和的顺序来完成反向的中序遍历*
+```java
+class Solution {
+
+	int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        if(root==null)
+            return null;
+    	convertBST(root.right);
+        root.val+=sum;//巧妙的将中序遍历左根右的顺序逆过来，变成右根左的顺序，这样就可以反向计算累加和sum，同时更新结点值.和上一个的区别在于先更新节点值再求和
+        sum=root.val;
+        convertBST(root.left);
+		return root;
+        
+    }
+
+}
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
