@@ -646,6 +646,7 @@ class Solution {
 
 }
 ```
+### 根据二叉树创建字符串
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
