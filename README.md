@@ -664,6 +664,53 @@ class Solution {
             return String.valueOf(t.val);
     } 
 ```
+### 二叉树的坡度
+`题目：给定一个二叉树，计算整个树的坡度。
+一个树的节点的坡度定义即为，该节点左子树的结点之和和右子树结点之和的差的绝对值。空结点的的坡度是0。
+整个树的坡度就是其所有节点的坡度之和。`<br>
+	我的想法:分别写两个函数，一个用来计算每个节点下面的节点之和，一个用户计算坡度值，最后在主函数中遍历所有节点计算每个节点的坡度值相加  
+```java
+class Solution {
+	int sum;
+	 public int findTilt(TreeNode root) {
+		 if(root==null)
+			 return 0;
+	       sum+= grade_count(root);
+	       findTilt(root.left);
+	       findTilt(root.right);
+	       return sum;
+	 }
+	 public int grade_count(TreeNode t){//计算每个节点的坡度
+		 
+		return Math.abs(sum(t.left)-sum(t.right)); 
+	 }
+	 public int sum(TreeNode root){//计算一个树的和
+		 if(root==null)
+			 return 0;
+		 return root.val+sum(root.left)+sum(root.right);
+		 
+	 }
+}
+```
+	实际我多遍历了一次，在计算每个节点的下面和时就已经遍历一次了，这样直接可以得出每个节点的坡度值那么直接相加就可以了！
+```java
+class Solution {
+	int sum;
+	public int findTilt(TreeNode root) {
+	       grade(root);
+	       return sum;
+	 }
+	public int grade(TreeNode root){
+		if(root==null)
+			return 0;
+		int left=grade(root.left);
+		int right=grade(root.right);
+		sum+=Math.abs(left-right);//计算出坡度的过程中直接把它加给最终的sum就可以了，不过再在主函数中遍历一次
+		return root.val+left+right;//迭代去计算每个节点下面的值，实际上这个过程就遍历了所有节点
+		
+	}
+}
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
