@@ -732,6 +732,62 @@ class Solution {
        
     }
 ```
+### 二叉树的层平均值
+[leetcode:637. Average of Levels in Binary Tree](https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/description/)<br>
+`题目：给定一个非空二叉树, 返回一个由每层节点平均值组成的数组.`
+	理解:按照层序遍历的方式去遍历整个树，要用到队列。但是因为队列中并不会每次存放的都是一行元素，于是可以考虑引入null来划分不同层。一层结束则压入null
+```java
+public List<Double> averageOfLevels(TreeNode root) {
+    	List<Double> list=new LinkedList<>();
+    	List<Integer> temp=new LinkedList<>();//用一个队列来存放每一层的元素，后面用来求平均值
+        LinkedList<TreeNode> queue=new LinkedList<>();//用链表实现一个队列，存放每一层的元素
+        queue.offer(root);
+        queue.offer(null);//用空节点来表示一层结束
+        while(!queue.isEmpty()){
+        	TreeNode current=queue.poll();
+        	if(current!=null){
+        		temp.add(current.val);//将每一层元素放到数组中
+        		if(current.left!=null)
+        			queue.offer(current.left);
+        		if(current.right!=null)
+        			queue.offer(current.right);
+        	}
+        	else{
+        		if(!temp.isEmpty()){
+        			queue.offer(null);
+        			double sum = 0;
+        			for(int i=0;i<temp.size();i++)
+        				sum+=(double)temp.get(i);
+        			list.add(sum/temp.size());
+        			temp.clear();
+        		}
+        	}
+        }
+        return list;
+    }
+```
+	另一种解法：不需要引入null，而是在每次刚好一层元素的时候记录队列的长度，按照长度弹出队列元素并相加。上一层有几个元素便在for循环中弹出几次，这样下次循环是队列中放的正好就是下一层的元素。这样便不管队列实际是不是一层元素了  
+```java
+	public List<Double> averageOfLevels(TreeNode root) {
+		List<Double> list=new LinkedList<>();
+		LinkedList<TreeNode> queue=new LinkedList<>();
+		queue.offer(root);
+		while(!queue.isEmpty()){
+			double sum=0;
+			int n=queue.size();//记录每一层元素的数目
+			for(int i=0;i<n;i++){
+				TreeNode current=queue.poll();
+				sum+=current.val;
+				if(current.left!=null)
+        			queue.offer(current.left);
+        		if(current.right!=null)
+        			queue.offer(current.right);	
+			}
+			list.add(sum/n);
+		}
+		return list;
+	}
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
