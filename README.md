@@ -788,6 +788,32 @@ public List<Double> averageOfLevels(TreeNode root) {
 		return list;
 	}
 ```
+### 修建二叉树
+[leetcode:669. Trim a Binary Search Tree](https://leetcode-cn.com/problems/trim-a-binary-search-tree/description/)<br>
+`题目：给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R>=L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。`<br>
+	分类讨论，如果节点的值小于区间的话那么其左节点一定小于区间的值，那么直接用右节点代替他就可以了  
+	若果节点值大于区间值的话，就用左节点代替它！如果在区间中的话那么就向下递归遍历！
+```java
+	 public TreeNode trimBST(TreeNode root, int L, int R) {
+        if(root==null)
+	    		return null;
+	    	if(root.val<L){
+	            root=root.right;
+	             root=trimBST(root,L,R);//注意在二叉树中递归必须让他赋值给root来更新节点的值
+	         }//该节点以及左子树都删去
+	 
+	    	else if(root.val>R){
+	              root=root.left;
+	               root=trimBST(root,L,R);
+	        }
+	    		//该节点以及右子树的值都删去
+	        else{
+	              root.left=trimBST(root.left,L,R);//注意如果对二叉树中的节点进行改变时，必须赋值，调用什么实参就赋值给什么，这样才能更新节点的值！
+	    	      root.right=trimBST(root.right,L,R);
+	            }
+			return root;
+    }
+```
 ## 哈希表
 ### 两数之和<br>
 [Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
