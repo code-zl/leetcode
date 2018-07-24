@@ -854,7 +854,52 @@ public int[] twoSum(int[] nums, int target) {
     throw new IllegalArgumentException("No two sum solution");
 }
 ```
-
-
+### 同构字符串
+`题目：给定两个字符串 s 和 t，判断它们是否是同构的。
+如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。
+所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身.`
+	** 我的解法
+将两个字符串按照字符分别放在map中，因为map中键不能重复，重复得话值会覆盖，所以遍历字符串然后和map中的值进行比较就可以判断对应位置是不是对应了，但是要注意的是不能有两个字符对应同一个相同的字符，于是考虑把值都放在set（元素不重复）中，看map和set长度是不是相等便可判断value有没有重复的<br>
+```java
+    public static boolean isIsomorphic(String s, String t) {
+    	HashMap<Character, Character> map=new HashMap<>();//set中元素不允许重复，可用于判断是不是有两个重复的值
+    	Set<Character> set=new HashSet<>();
+    	char[] a=s.toCharArray();
+    	char[] b=t.toCharArray();
+    	for(int i=0;i<a.length;i++){
+    		map.put(a[i], b[i]);
+    	}
+    	for(int i=0;i<a.length;i++){
+    		if(map.get(a[i])!=b[i])
+    			return false;
+    	}//还要考虑如果有多对一的情况。即两个不同的字符映射相同的字符
+    	for(java.util.Map.Entry<Character, Character> a1:map.entrySet()){
+    		set.add(a1.getValue());
+    	}
+    	if(map.size()!=set.size())
+    		return false;
+		return true;
+        
+    }
+```
+	** 更简单的解法
+不用hashmap，而是根据字符ASCⅡ码一定在256之类来构造两个256长的数组，两字符串相互映射的字符对应数组中的位置放相同的值。遍历数组时只要对应位置的值不同那就返回false<br>
+```java
+    public boolean isIsomorphic(String s, String t) {
+        int[] a = new int[256];
+        int[] b = new int[256];
+        for (int i = 0; i < 256; i++) {
+            a[i] = b[i] = -1;
+        }
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            if (a[s.charAt(i)] != b[t.charAt(i)]) {
+                return false;
+            }
+            a[s.charAt(i)] = b[t.charAt(i)] = i;
+        }
+        return true;
+    }
+```
 
 [回到目录](#目录)
