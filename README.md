@@ -901,5 +901,30 @@ public int[] twoSum(int[] nums, int target) {
         return true;
     }
 ```
+### 单词匹配
+[leetcode:290. Word Pattern](https://leetcode.com/problems/word-pattern/description/)<br>
+`给一个字符串pattern和一个字符串str（其中各个子串用空格隔开），使他们完全配对
+Input: pattern = "abba", str = "dog cat cat dog"
+Output: true`
+想法：分别把pattern字符串按字符放到map中，对应的值取他们最后出现的位置。然后把str中对应的各个字符串放在另一个map中，同样的各个字符串的值取他们最后出现的位置（其实就是给各个子串一个对应的和数字），然后遍历整个字符串，只有对应位置出现的值都是一样的那才是匹配的！<br>
+	注意点：integer对象必须用equals进行比较，而不能用==！
+```java
+    public  boolean wordPattern(String pattern, String str) {
+        HashMap<Character, Integer> map1=new HashMap<>();
+        HashMap<String, Integer> map2=new HashMap<>();
+        String[] strings=str.split(" ");
+        if(pattern.length()!=strings.length)
+        	return false;
+        for(int i=0;i<pattern.length();i++){
+        	map1.put(pattern.charAt(i), i);
+        	map2.put(strings[i], i);
+        }
+        for(int i=0;i<pattern.length();i++){
+        if(!map1.get(pattern.charAt(i)).equals(map2.get(strings[i])))//注意：integer对象必须用equals进行比较，而不能用==！
+        		return false;
+        }
+        return true;
+    }
+```
 
 [回到目录](#目录)
