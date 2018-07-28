@@ -929,7 +929,7 @@ Output: true`
     }
 ```
 
-###快乐数
+### 快乐数
 `题目：编写一个算法来判断一个数是不是“快乐数”。
 一个“快乐数”定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程直到这个数变为 1，也可能是无限循环但始终变不到 1。如果可以变为 1，那么这个数就是快乐数`<br>
 	首先按照题目必须把一个数字的各位取出来，然后再平方和。常规的方法是取模，如：
@@ -956,7 +956,37 @@ Output: true`
     	return n==1;
     }
 ```
-
+### 两个数组的交集 II
+[leetcode:350. Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/description/)<br>
+`题目：给定两个数组，写一个方法来计算它们的交集。`<br>
+	我的思路：把一个数组放在hashmap中，用value表示每个数字出现的次数，不然就会导致后一个数把前一个覆盖了，而题目要求对于重复出现的数如果同样是  	     交集也要重复输出！有一点感觉很麻烦，因为结果要放在数组中，但是又不确定数组长度，所以我使用了ArrayList，随后转换成Integer数组再转换为int数	   组有点麻烦！其实可以直接把list中取出每个元素赋给int数，因为自动拆箱可以把Integer对象直接赋值给int变量<br>
+```java
+    public static int[] intersect(int[] nums1, int[] nums2) {
+    	ArrayList<Integer> list=new ArrayList<>();
+        HashMap<Integer, Integer> map=new HashMap<>();
+        for(int i=0;i<nums2.length;i++){
+        	if(map.containsKey(nums2[i]))
+        		map.put(nums2[i],map.get(nums2[i])+1);//value放一个数出现的次数
+        	else map.put(nums2[i],1);
+        }
+        for(int i=0;i<nums1.length;i++){
+        	if(map.containsKey(nums1[i])&&map.get(nums1[i]).intValue()>0){
+        		list.add(nums1[i]);
+        		map.put(nums1[i],map.get(nums1[i])-1);
+        	}
+        }
+        Integer[] integers = list.toArray(new Integer[list.size()]);//必须使用这种形式的toArray，如果用没有参数的那种生成Object数组再强制类型转换总是会出错
+        int[] arr=new int[integers.length];
+        for(int i=0;i<integers.length;i++)
+        	arr[i]=integers[i];
+	 /**
+         * for(int i=0;i<list.size();i++){
+         * 		arr[i]=(Integer)list.get(i);//这样就少一步定义Integer数组的步骤
+         * }
+         */
+        return arr;
+    }
+```
 ## 数组
 ### 两数之和2——针对排序数组
 [leetcode:167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)<br>
