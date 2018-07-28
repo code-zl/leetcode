@@ -816,10 +816,10 @@ public List<Double> averageOfLevels(TreeNode root) {
 ```
 ## 哈希表
 ### 两数之和<br>
-[Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  
+[Leetcode : 1. Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/description/)  <br>
 `题目：给定一个整数数组和一个目标值，找出数组中和为目标值的两个数。你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用
 		input: nums = [2, 7, 11, 15], target = 9 
-		output: [0, 1]`
+		output: [0, 1]`<br>
 
 我的解法<br>
 ```java
@@ -859,7 +859,7 @@ public int[] twoSum(int[] nums, int target) {
 ### 同构字符串
 `题目：给定两个字符串 s 和 t，判断它们是否是同构的。
 如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。
-所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身.`
+所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身.`<br>
 	** 我的解法
 将两个字符串按照字符分别放在map中，因为map中键不能重复，重复得话值会覆盖，所以遍历字符串然后和map中的值进行比较就可以判断对应位置是不是对应了，但是要注意的是不能有两个字符对应同一个相同的字符，于是考虑把值都放在set（元素不重复）中，看map和set长度是不是相等便可判断value有没有重复的<br>
 ```java
@@ -884,7 +884,7 @@ public int[] twoSum(int[] nums, int target) {
         
     }
 ```
-	** 更简单的解法
+	 更简单的解法
 不用hashmap，而是根据字符ASCⅡ码一定在256之类来构造两个256长的数组，两字符串相互映射的字符对应数组中的位置放相同的值。遍历数组时只要对应位置的值不同那就返回false<br>
 ```java
     public boolean isIsomorphic(String s, String t) {
@@ -1012,6 +1012,35 @@ Output: true`
         		 redundance=c;
         }
 		return redundance;
+    }
+```
+### 最长的回文数
+`题目：给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。
+在构造过程中，请注意区分大小写。比如 "Aa" 不能当做一个回文字符串。`
+		仍旧是用hashmap中的key存放字符，value存放个数。偶数个可以直接用，奇数个的话需要减去1，注意的是所有单个出现的元素（包含个数为奇数		的元素）只能用一个！
+```java
+    public static int longestPalindrome(String s) {
+    	int sum=0;
+        HashMap<Character, Integer> map=new HashMap<>();
+        //构造哈希表，value存放每个字符出现的次数
+        for(int i=0;i<s.length();i++){
+        	if(map.containsKey(s.charAt(i))){
+        		map.put(s.charAt(i), map.get(s.charAt(i))+1);
+        	}
+        	else map.put(s.charAt(i), 1);
+        }
+        for(Character c:map.keySet()){
+        	if(map.get(c)%2==0)//如果一个字符的个数是偶数便可以用来构成回文数
+        		sum+=map.get(c);
+        	else if(map.get(c)!=1){
+        		sum+=map.get(c)-1;
+        		map.put(c,1);//对于数目为奇数的元素，偶数个用来组成回文，还剩一个有可能可以放中间
+        	}
+        		
+        }
+        if(map.containsValue(1))//有单个出现的元素时只能加1个
+        	return sum+1;
+        else return sum;
     }
 ```
 ## 数组
