@@ -987,6 +987,33 @@ Output: true`
         return arr;
     }
 ```
+### 找不同
+[leetcode:389. Find the Difference](https://leetcode.com/problems/find-the-difference/description/)<br>
+`题目：给定两个字符串 s 和 t，它们只包含小写字母。
+字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。
+请找出在 t 中被添加的字母。`<br>
+	因为有可能添加的是以前出现的数，所以定义了一乐hashmap，value存放一个字符出现的次数！每次循环另一个字符串时对hashmap中的元素值减1即可！和上	       面那道题的思路基本一致
+```java
+    public static char findTheDifference(String s, String t) {
+        HashMap<Character, Integer> map=new HashMap<>();
+        char redundance = 0;
+        for(int i=0;i<t.length();i++){
+        	if(map.containsKey(t.charAt(i))){
+        		map.put(t.charAt(i), map.get(t.charAt(i))+1);
+        	}
+        	else map.put(t.charAt(i), 1);
+        }
+        for(int i=0;i<s.length();i++){
+        	if(map.containsKey(s.charAt(i)))
+        		map.put(s.charAt(i), map.get(s.charAt(i))-1);//碰到相同的数字就对后面的数字减1，最后值为1的key就是多加的
+        }
+        for(Character c:map.keySet()){
+        	if(map.get(c)==1)
+        		 redundance=c;
+        }
+		return redundance;
+    }
+```
 ## 数组
 ### 两数之和2——针对排序数组
 [leetcode:167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)<br>
