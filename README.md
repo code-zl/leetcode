@@ -3,7 +3,7 @@
 	*  [栈和队列](#栈和队列)
 	*  [树](#树)
 	*  [哈希表](#哈希表)
-
+	* [数组](#数组)
 
 
 
@@ -854,6 +854,8 @@ public int[] twoSum(int[] nums, int target) {
     throw new IllegalArgumentException("No two sum solution");
 }
 ```
+		相关的题目：
+[两数之和2——数组排好序](#两数之和2——针对排序数组)
 ### 同构字符串
 `题目：给定两个字符串 s 和 t，判断它们是否是同构的。
 如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。
@@ -952,6 +954,29 @@ Output: true`
         	k++;
     	}
     	return n==1;
+    }
+```
+
+## 数组
+### 两数之和2——针对排序数组
+[leetcode:167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)<br>
+`题目：Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2.`<br>
+	这里因为数组已经是排好序的了，所以用不能像之前的TwoSum一样使用HashMap，反而会变得麻烦。应该和二叉查找树中的方法一样（按照中序遍历二叉查找树	    便是从小到大排序），从数组两端往中间进行查找,大了的话左边就右移，小了的话右边就左移。<br>
+```java
+    private static int[] twoSum(int[] numbers, int target) {
+    	int start=0;
+    	int end=numbers.length-1;
+    	while(start<end){
+        	if(numbers[start]+numbers[end]<target)
+        		start+=1;
+        	else if(numbers[start]+numbers[end]>target)
+        		end-=1;
+        	else break;
+    	}
+
+		return new int[]{start+1,end+1};
+        
     }
 ```
 [回到目录](#目录)
