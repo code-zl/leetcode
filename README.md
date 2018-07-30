@@ -3,6 +3,7 @@
 	*  [栈和队列](#栈和队列)
 	*  [树](#树)
 	*  [哈希表](#哈希表)
+	* [优先队列（堆）](#优先队列（堆）)
 	* [数组](#数组)
 
 
@@ -1042,6 +1043,43 @@ Output: true`
         	return sum+1;
         else return sum;
     }
+```
+## 优先队列（堆）
+### 流中第k大的元素
+[leetcode:703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/description/)<br>
+`题目：Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+Your KthLargest class will have a constructor which accepts an integer k and an integer array nums, which contains initial elements from the stream. For each call to the method KthLargest.add, return the element representing the kth largest element in the stream.`<br>
+	注意：题目中要求第k大的数字，其中java中PriorityQueue类默认会将最小的元素放在队首。首先我的想法是假如一个compator类来定义堆对象，通过重写c	  ompare方法从而使得队首元素是最大的元素，然后poll到第k个元素就行，但是问题是需要不断地add，并且后一次还保留着上一次的结果，所以总是poll便行	不通了。<br>
+	于是就让队首放最小的元素，但是堆得大小固定为k，加入一个元素判断是不是大于队首元素，大于的话说明队首不是第k大的，弹出然后加入新的元素；否则的  	 话再判断下一个add的元素。这样k长的队列的队首就总是第k大的元素，也就是队列中最小的元素了！<br>
+```java
+	int k;
+	PriorityQueue<Integer> priorityQueue;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		KthLargest kthLargest=new KthLargest(3, new int[]{4,5,8,2});
+		System.out.print(kthLargest.add(3));
+		System.out.print(kthLargest.add(5));
+		System.out.print(kthLargest.add(10));
+		System.out.print(kthLargest.add(9));
+		System.out.print(kthLargest.add(4));
+	}
+
+	public KthLargest(int k, int[] nums) {
+		this.k=k;
+		priorityQueue=new PriorityQueue<>(k);//保证堆中始终只有k个元素，最小的元素就是我们需要的元素
+		for(int n:nums)
+			add(n);//注意不能调用PriorityQueue对象的add方法，那样会导致堆中元素个数大于k
+	}
+
+	public int add(int val) {
+		if(priorityQueue.size()<k)
+			priorityQueue.add(val);
+		else if(val>priorityQueue.peek()){//大于的话才弹出旧元素！
+			priorityQueue.poll();
+    		priorityQueue.add(val);
+		}
+    	return priorityQueue.peek();
+	}
 ```
 ## 数组
 ### 两数之和2——针对排序数组
