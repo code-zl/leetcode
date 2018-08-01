@@ -3,7 +3,7 @@
 	*  [栈和队列](#栈和队列)
 	*  [树](#树)
 	*  [哈希表](#哈希表)
-	* [优先队列（堆）](#优先队列（堆）)
+	* [优先队列（堆）](#优先队列(堆))
 	* [数组](#数组)
 
 
@@ -1044,7 +1044,7 @@ Output: true`
         else return sum;
     }
 ```
-## 优先队列（堆）
+## 优先队列(堆)
 ### 流中第k大的元素
 [leetcode:703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/description/)<br>
 `题目：Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, not the kth distinct element.
@@ -1080,6 +1080,65 @@ Your KthLargest class will have a constructor which accepts an integer k and an 
 		}
     	return priorityQueue.peek();
 	}
+```
+### 丑数2
+[leetcode:264. Ugly Number II](https://leetcode.com/problems/ugly-number-ii/description/)<br>
+在[Ugly Numbers](https://www.geeksforgeeks.org/ugly-numbers/)有关于此题很详细的解释，以及另一种用DP算法做的方法<br>
+`题目：编写一个程序，找出第 n 个丑数。
+丑数就是只包含质因数 2, 3, 5 的正整数`<br>
+	***最容易想的解法（时间复杂度太高）***
+	首先定义一个方法确定一个数是不是丑数（不断去除以2、3、5，如果能除到1那就是丑数，否则就不是），然后从1开始遍历所有的正整数，并对每一个数判别是不是丑数，直到找到第n个丑数为止。这种方法因为要遍历很多整数以找到第n个丑数，所以会超时，但是空间复杂度是O(1).
+```java
+    public  int nthUglyNumber(int n) {
+    	int cout=1;
+    	int i=1;//存放丑数
+        while(n>cout){
+        	i++;
+        	if(uglyNumber(i))
+        		cout++;
+        }
+        return i;
+    }
+    public static boolean uglyNumber(int i){//判断一个数 的因子是不是只有2,3,5
+    	if(i==1)
+    		return true;
+    	while(i%2==0)
+    		i/=2;
+    	while(i%3==0)
+    		i/=3;
+    	while(i%5==0)
+    		i/=5;
+    	return (i==1)?true:false;
+    }
+```
+	***只遍历丑数，乘以2,3,5找丑数***
+考虑将所有的丑数序列分成三个部分：<br>
+`(1) 1×2, 2×2, 3×2, 4×2, 5×2, …  
+(2) 1×3, 2×3, 3×3, 4×3, 5×3, …  
+(3) 1×5, 2×5, 3×5, 4×5, 5×5, …`  
+其中每一个序列都是丑数序列（1,2,3,4,5...）本身乘以2,3,4得到的，然后用和`合并排序`类似的方法进行合并！重点是，因为要求n的数要有序排列，所以每次都要从中选择最小的一个<br>
+```java
+	  public  int nthUglyNumber(int n) {
+		 int[] ugly=new int[n];
+		 int index2=0;int index3=0;int index5=0;//对于三个子序列要分别定义下标
+		 int factor2=2;
+		 int factor3=3;
+		 int factor5=5;//定义3个因子变量
+		 ugly[0]=1;
+		 for(int i=1;i<n;i++){
+			 int min=Math.min(Math.min(factor2, factor3), factor5);//每次只取3个中最小的放在数组中
+			 ugly[i]=min;//三个队列中每次把最小的先放进数组
+			 if(min==factor2)//此时最小的在因子2所在的子序列中。那么一下个要比较的就是给他乘以2在和之前的大小进行比较
+				 factor2=2*ugly[++index2];
+			 if(min==factor3)
+				 factor3=3*ugly[++index3];
+			 if(min==factor5)
+				 factor5=5*ugly[++index5];
+			 
+		 }
+		return ugly[n-1];
+		  
+	  }
 ```
 ## 数组
 ### 两数之和2——针对排序数组
