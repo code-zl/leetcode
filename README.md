@@ -3,7 +3,8 @@
 	*  [栈和队列](#栈和队列)
 	*  [树](#树)
 	*  [哈希表](#哈希表)
-	* [优先队列（堆）](#优先队列(堆))
+	* [优先队列(堆)](#优先队列(堆))
+	* [排序](*排序)
 	* [数组](#数组)
 
 
@@ -1139,6 +1140,36 @@ Your KthLargest class will have a constructor which accepts an integer k and an 
 		return ugly[n-1];
 		  
 	  }
+```
+## 排序
+### 最大数
+[leetcode:179. Largest Number](https://leetcode.com/problems/largest-number/description/)<br>
+`题目：给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。
+出结果可能非常大，所以你需要返回一个字符串而不是整数。`  
+	很难的题目，因为涉及到特殊的对数组排序，并且是对字符串的排序！重点是重写Arrays的sort方法，对字符串进行排序，这里需要比较两个字符串大小，实	际就是看两个字符串怎么组合结果是最大的，而组合方式有两种，从中选择最大的一个就可以。重写compare方法实际上就是看怎么比较两个数的大小，这里新颖	支出在于比较的不是两个参数的大小，而是他们组合起来的大小！！重新写compare方法便实现了一种数组的新的排序方式!  
+```java
+   public static String largestNumber(int[] nums) {
+        String[] strings=new String[nums.length];
+        for(int i=0;i<nums.length;i++)
+        	strings[i]=String.valueOf(nums[i]);//将整数数组转换为字符串数组
+        Comparator<String> comparator=new Comparator<String>() {//重新定义比较器以对数组进行新的方式排序
+			
+			@Override
+			public int compare(String o1, String o2) {
+				// TODO Auto-generated method stub
+				String s1=o1+o2;
+				String s2=o2+o1;//两个字符串进行组合只有这两种组合方式，故比较大小也是这个字符串进行比较
+				return s2.compareTo(s1);//颠倒次序，这样就可以使得最终排序是按照降序排列的
+			}
+		};
+		Arrays.sort(strings, comparator);//重写compare后按照新的排序方法调用Arrays的sort方法
+		if(strings[0].charAt(0)=='0')//对全0输入加入考虑
+			return "0";
+		StringBuilder stringBuilder=new StringBuilder();
+		for(String s:strings)
+			stringBuilder.append(s);//最后 把数组中的字符串都放在一起输出
+		return stringBuilder.toString();
+    }
 ```
 ## 数组
 ### 两数之和2——针对排序数组
