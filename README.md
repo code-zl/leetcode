@@ -1,6 +1,7 @@
 # 目录
 * 数据结构相关
 	*  [栈和队列](#栈和队列)
+	*  [链表](#链表)
 	*  [树](#树)
 	*  [哈希表](#哈希表)
 	* [优先队列(堆)](#优先队列(堆))
@@ -260,6 +261,26 @@ class MyQueue {
     			cout++;
     	}
 		return cout==len;
+    }
+```
+## 链表
+### 删除链表中的节点
+[leetcode:203. Remove Linked List Elements](https://leetcode-cn.com/problems/remove-linked-list-elements/description/)<br>
+`题目：删除链表中等于给定值 val 的所有节点。`
+		因为要考虑头节点可能发生了变化，所以必须要定义一个虚假的节点来确定头节点的位置！
+```java
+    public ListNode removeElements(ListNode head, int val) {
+    	ListNode fakehead=new ListNode(-1);//定义一个虚假的头部
+    	fakehead.next=head;
+    	ListNode current=head;
+    	ListNode pre=fakehead;
+    	while(current!=null){
+    		if(current.val==val)
+    			pre.next=current.next;
+    		else pre=pre.next;
+    		current=current.next;
+    	}
+    	
     }
 ```
 树
